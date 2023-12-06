@@ -12,7 +12,7 @@ const Session =
 
 if (env("NODE_ENV") === "production") {
 	const MONGODB_DATABASE = env("NS_MONGODB_DATABASE");
-	const MONGODB_USERNAME = env("NS_MONGODB_USERNAME");
+	const MONGODB_USERNAME = env("NS_MONGODB_USER");
 	const MONGODB_PASSWORD = env("NS_MONGODB_PASSWORD");
 	const MONGODB_HOSTNAME = env("NS_MONGODB_HOSTNAME");
 	const MONGODB_PORT = env("NS_MONGODB_PORT");
