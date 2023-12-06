@@ -11,12 +11,13 @@ const Session =
 	mongoose.models.session || mongoose.model("session", sessionSchema);
 
 if (env("NODE_ENV") === "production") {
-	const MONGODB_DATABASE = env("MONGODB_DATABASE");
-	const MONGODB_USERNAME = env("MONGODB_USERNAME");
-	const MONGODB_PASSWORD = env("MONGODB_PASSWORD");
-	const MONGODB_HOSTNAME = env("MONGODB_HOSTNAME");
+	const MONGODB_DATABASE = env("NS_MONGODB_DATABASE");
+	const MONGODB_USERNAME = env("NS_MONGODB_USERNAME");
+	const MONGODB_PASSWORD = env("NS_MONGODB_PASSWORD");
+	const MONGODB_HOSTNAME = env("NS_MONGODB_HOSTNAME");
+	const MONGODB_PORT = env("NS_MONGODB_PORT");
 
-	const MONGO_URI = `mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOSTNAME}/${MONGODB_DATABASE}`;
+	const MONGO_URI = `mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOSTNAME}:${MONGODB_PORT}/${MONGODB_DATABASE}`;
 
 	mongoose.connect(MONGO_URI);
 }
