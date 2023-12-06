@@ -5,7 +5,7 @@ import { session } from "./session";
 const useApi = async (request: Request) => {
 	const sessionData = await session.getSessionData(request);
 	if (!sessionData) {
-		throw redirect("/login");
+		throw redirect("/api/login");
 	}
 	const api = new Apis(
 		new Configuration({

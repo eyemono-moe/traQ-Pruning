@@ -21,15 +21,15 @@ const isLogin = async (request: Request) => {
 };
 
 const uncheckedPaths = ["/api/login", "/api/logout", "/api/callback"];
+const protectedPaths = ["/"];
 
 export const checkLoginMiddleware: Middleware = ({ forward }) => {
 	return async (event) => {
-		if (uncheckedPaths.includes(new URL(event.request.url).pathname)) {
-			return forward(event);
-		}
-		const _isLogin = await isLogin(event.request);
-		if (!_isLogin) {
-			return redirect("/api/login");
+		if (protectedPaths.includes(new URL(event.request.url).pathname)) {
+			const _isLogin = await isLogin(event.request);
+			if (!_isLogin) {
+				return redirect("/api/login");
+			}
 		}
 		return forward(event);
 	};
