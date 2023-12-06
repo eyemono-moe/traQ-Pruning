@@ -1,7 +1,7 @@
 {
   "name": "traQ-pruning-v2",
   "scripts": {
-    "dev": "solid-start dev",
+    "dev": "solid-start dev --port 3000",
     "build": "solid-start build",
     "start": "solid-start start",
     "check": "biome check .",
@@ -20,6 +20,9 @@
   "dependencies": {
     "@solidjs/meta": "^0.29.1",
     "@solidjs/router": "^0.8.3",
+    "@traptitech/traq": "3.15.1-8",
+    "dotenv": "^16.3.1",
+    "mongoose": "^8.0.2",
     "solid-js": "^1.8.5",
     "solid-start": "^0.3.10"
   },
