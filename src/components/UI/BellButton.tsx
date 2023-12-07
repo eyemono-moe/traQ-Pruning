@@ -1,23 +1,26 @@
 import { ChannelSubscribeLevel } from "@traptitech/traq";
 import { Component, JSX } from "solid-js";
+import { ChannelNode, HandleAction } from "./ChannelLi";
 
 const BellButton: Component<{
 	level: ChannelSubscribeLevel;
-	forceNotified?: boolean;
+	node: ChannelNode;
 	pending?: boolean;
-	handleUnsubscribe: () => void;
-	handleNotified: () => void;
-	handleSubscribe: () => void;
+	handleAction: HandleAction;
 }> = (props) => {
 	const handleClick: JSX.EventHandler<HTMLButtonElement, MouseEvent> = (e) => {
 		e.stopPropagation();
 		if (props.pending) return;
-		if (props.level === 0) {
-			props.handleNotified();
-		} else if (props.level === 1) {
-			props.handleSubscribe();
-		} else {
-			props.handleUnsubscribe();
+		switch (props.level) {
+			case 0:
+				props.handleAction(1, props.node);
+				break;
+			case 1:
+				props.handleAction(2, props.node);
+				break;
+			case 2:
+				props.handleAction(0, props.node);
+				break;
 		}
 	};
 
@@ -25,23 +28,31 @@ const BellButton: Component<{
 		<button
 			type="button"
 			onClick={handleClick}
-			class={`w-8 h-8 grid place-content-center hover:bg-slate-200 rounded transition-colors duration-200
-      ${props.pending ? "animate-pulse cursor-wait" : ""} ${
-				props.forceNotified ? "cursor-not-allowed" : ""
-			}`}
-			disabled={props.forceNotified || props.pending}
+			class={`w-8 h-8 shrink-0 grid place-content-center hover:enabled:bg-sky-200 rounded transition-colors duration-200 ${
+				props.pending ? "animate-pulse cursor-wait" : ""
+			} ${props.node.channel.force ? "cursor-not-allowed" : ""}`}
+			disabled={props.node.channel.force || props.pending}
+			title={
+				props.node.channel.force
+					? "強制通知のため変更できません"
+					: props.level === 0
+					  ? "通知しない"
+					  : props.level === 1
+						  ? "未読管理"
+						  : "未読管理+通知"
+			}
 		>
 			<div
 				class={`w-6 h-6 color-gray-800 ${
-					props.forceNotified
+					props.node.channel.force
 						? // 強制通知
-						  "i-material-symbols:notifications-rounded color-gray-400"
+						  "i-material-symbols:notifications-rounded opacity-50"
 						: props.level === 0
 						  ? // 購読無し
 							  "i-material-symbols:notifications-outline-rounded"
 						  : props.level === 1
 							  ? // 未読管理
-								  'i-material-symbols:notifications-outline-rounded after:content-[""] after:absolute after:inset-0 after:rounded-full after:bg-slate-400'
+								  "i-custom:notifications-dot"
 							  : // 未読管理+通知
 								  "i-material-symbols:notifications-rounded"
 				}`}

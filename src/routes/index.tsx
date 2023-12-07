@@ -39,17 +39,22 @@ export default function Page() {
 	const { me, channels } = useRouteData<typeof routeData>();
 
 	return (
-		<main class="text-base prose max-w-full">
-			<h1>traQ Pruning</h1>
-			<p>
-				通知の剪定アプリです。
-				<Show when={me()}>
-					<div>logged in as {me()!.name}</div>
+		<main
+			class="text-base prose max-w-full w-full h-full flex justify-center overflow-y-auto overflow-x-hidden p-4"
+			style={{ "scrollbar-gutter": "stable" }}
+		>
+			<div class="w-full max-w-[1000px]">
+				<h1>traQ Pruning</h1>
+				<p>
+					通知の剪定アプリです。
+					<Show when={me()}>
+						<div>logged in as {me()!.name}</div>
+					</Show>
+				</p>
+				<Show when={channels()}>
+					<ChannelTree channels={channels()!} />
 				</Show>
-			</p>
-			<Show when={channels()}>
-				<ChannelTree channels={channels()!} />
-			</Show>
+			</div>
 		</main>
 	);
 }
