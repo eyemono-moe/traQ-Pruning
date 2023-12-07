@@ -8,7 +8,7 @@ import useApi from "~/lib/useApi";
 
 export const BASE = import.meta.env.DEV
 	? "http://localhost:3000"
-	: "https://pruning.trap.show";
+	: "https://bell.trap.show";
 
 export const routeData = () => {
 	const me = createServerData$(async (_, event) => {

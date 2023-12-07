@@ -18,7 +18,7 @@ export default function Root() {
 	return (
 		<Html lang="ja">
 			<Head>
-				<Title>traQ Pruning - 通知の剪定アプリ</Title>
+				<Title>Q Bell - traQの通知管理アプリ</Title>
 				<Meta charset="utf-8" />
 				<Meta name="viewport" content="width=device-width, initial-scale=1" />
 			</Head>
