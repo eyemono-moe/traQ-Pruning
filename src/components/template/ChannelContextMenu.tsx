@@ -1,7 +1,6 @@
 import { ContextMenu } from "@kobalte/core";
 import { ChannelSubscribeLevel } from "@traptitech/traq";
 import { ParentComponent } from "solid-js";
-import { A } from "solid-start";
 import { ChannelNode, HandleAction } from "../UI/ChannelLi";
 
 const container =

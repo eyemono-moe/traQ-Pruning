@@ -5,7 +5,8 @@
     "build": "solid-start build",
     "start": "solid-start start",
     "check": "biome check ./src",
-    "check:apply": "biome check --apply ./src"
+    "check:apply": "biome check --apply ./src",
+    "typecheck": "tsc --noEmit"
   },
   "type": "module",
   "devDependencies": {
@@ -19,6 +20,7 @@
     "unocss": "^0.58.0",
     "vite": "^4.4.9"
   },
+  "packageManager": "pnpm@8.6.0",
   "dependencies": {
     "@iconify-json/material-symbols": "^1.1.65",
     "@kobalte/core": "^0.11.2",

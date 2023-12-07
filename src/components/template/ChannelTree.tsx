@@ -1,7 +1,6 @@
 import { Collapsible } from "@kobalte/core";
 import { Channel } from "@traptitech/traq";
 import { Component, For, Show, createMemo } from "solid-js";
-import { isMobile } from "~/contexts/isMobile";
 import ChannelLi, { ChannelNode } from "../UI/ChannelLi";
 
 const CollapsibleNodes: Component<{

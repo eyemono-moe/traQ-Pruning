@@ -1,4 +1,3 @@
-import { request } from "http";
 import { createCookieSessionStorage, redirect } from "solid-start";
 import { SessionDB } from "~/db";
 import { memorySessionDb } from "~/db/memory";

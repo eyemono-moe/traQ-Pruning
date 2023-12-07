@@ -9,16 +9,10 @@ import {
 const VIEWPORT_SIZE_QUERY = "screen and (max-width: 640px)";
 
 const createColorScheme = () => {
-	const [isMobile, setIsMobile] = createSignal(
-		window.matchMedia(VIEWPORT_SIZE_QUERY).matches,
-	);
+	const [isMobile, setIsMobile] = createSignal(false);
 
 	const onChange = () =>
 		setIsMobile(window.matchMedia(VIEWPORT_SIZE_QUERY).matches);
-
-	createEffect(() => {
-		console.log("isMobile", isMobile());
-	});
 
 	onMount(() => {
 		window.matchMedia(VIEWPORT_SIZE_QUERY).addEventListener("change", onChange);

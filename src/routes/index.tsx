@@ -1,34 +1,37 @@
 import { Image } from "@kobalte/core";
-import { Show } from "solid-js";
-import { createRouteData, useRouteData } from "solid-start";
+import { ChannelSubscribeLevel } from "@traptitech/traq";
+import { Show, onMount } from "solid-js";
+import { useRouteData } from "solid-start";
+import { createServerData$ } from "solid-start/server";
 import ChannelTree from "~/components/template/ChannelTree";
-import { GetChannelsRes } from "./api/channels";
-import { GetMeRes } from "./api/me";
-import { GetSubscriptionsRes } from "./api/subscriptions";
+import useApi from "~/lib/useApi";
 
 export const BASE = import.meta.env.DEV
 	? "http://localhost:3000"
 	: "https://pruning.trap.show";
 
 export const routeData = () => {
-	const me = createRouteData(
-		async () => {
-			const res = await fetch(`${BASE}/api/me`);
-			return (await res.json()) as GetMeRes;
-		},
-		{ key: "me" },
-	);
-	const channels = createRouteData(
-		async () => {
-			const res = await fetch(`${BASE}/api/channels`);
-			return (await res.json()) as GetChannelsRes;
-		},
-		{ key: "channels" },
-	);
-	const subscriptions = createRouteData(
-		async () => {
-			const res = await fetch(`${BASE}/api/subscriptions`);
-			return (await res.json()) as GetSubscriptionsRes;
+	const me = createServerData$(async (_, event) => {
+		const api = await useApi(event.request);
+		const { data: me } = await api.getMe();
+		return me;
+	});
+	const channels = createServerData$(async (_, event) => {
+		const api = await useApi(event.request);
+		const { data: channels } = await api.getChannels(false);
+		return channels.public.filter((c) => !c.archived);
+	});
+	const subscriptions = createServerData$(
+		async (_, event) => {
+			const api = await useApi(event.request);
+			const { data: subscriptions } = await api.getMyChannelSubscriptions();
+			const subscriptionDict: {
+				[channelId: string]: ChannelSubscribeLevel;
+			} = {};
+			for (const subscription of subscriptions) {
+				subscriptionDict[subscription.channelId] = subscription.level;
+			}
+			return subscriptionDict;
 		},
 		{ key: "subscriptions" },
 	);

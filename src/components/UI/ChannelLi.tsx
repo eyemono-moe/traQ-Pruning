@@ -1,9 +1,11 @@
 import { Channel, ChannelSubscribeLevel } from "@traptitech/traq";
 import { Component, Show } from "solid-js";
 import { createMemo } from "solid-js";
-import { createRouteAction, useRouteData } from "solid-start";
+import { useRouteData } from "solid-start";
+import { createServerAction$ } from "solid-start/server";
 import { isMobile } from "~/contexts/isMobile";
-import { BASE, routeData } from "~/routes";
+import useApi from "~/lib/useApi";
+import { routeData } from "~/routes";
 import ChannelContextMenu from "../template/ChannelContextMenu";
 import BellButton from "./BellButton";
 
@@ -24,6 +26,8 @@ export const getChildNodes = (
 	return children;
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export type HandleAction = (
 	level: ChannelSubscribeLevel,
 	channel: ChannelNode,
@@ -35,20 +39,26 @@ const ChannelLi: Component<{
 }> = (props) => {
 	const { subscriptions } = useRouteData<typeof routeData>();
 
-	const [enrolling, enroll] = createRouteAction(
-		async (payload: {
-			levels: {
-				[channelId: string]: ChannelSubscribeLevel;
-			};
-		}) => {
-			return await fetch(`${BASE}/api/subscriptions`, {
-				body: JSON.stringify(payload),
-				method: "PUT",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				cache: "no-cache",
-			});
+	const [enrolling, enroll] = createServerAction$(
+		async (
+			payload: {
+				level: ChannelSubscribeLevel;
+				channels: Channel["id"][];
+			},
+			event,
+		) => {
+			try {
+				const api = await useApi(event.request);
+				for (const channelId of payload.channels) {
+					await api.setChannelSubscribeLevel(channelId, {
+						level: payload.level,
+					});
+					await sleep(100);
+				}
+			} catch (e) {
+				console.error(e);
+			}
+			return;
 		},
 		{
 			invalidate: ["subscriptions"],
@@ -74,35 +84,24 @@ const ChannelLi: Component<{
 		}
 
 		// calc diff and update only changed channels
-		let levels: { [channelId: string]: ChannelSubscribeLevel };
 		const oldSubscriptions = subscriptions();
 
 		if (oldSubscriptions) {
-			levels = Object.fromEntries(
-				targetChannels.reduce<[string, ChannelSubscribeLevel][]>(
-					(acc, channelId) => {
-						const oldLevel = oldSubscriptions?.[channelId] ?? 0;
-						if (oldLevel !== level) {
-							acc.push([channelId, level]);
-						}
-						return acc;
-					},
-					[],
-				),
-			);
-		} else {
-			levels = Object.fromEntries(
-				targetChannels.map((channelId) => [channelId, level]),
+			targetChannels = targetChannels.filter(
+				(channelId) => oldSubscriptions[channelId] !== level,
 			);
 		}
 
-		return enroll({ levels });
+		return enroll({
+			level,
+			channels: targetChannels,
+		});
 	};
 
 	const displayLevel = createMemo(
 		() =>
 			(enrolling.pending
-				? enrolling.input?.levels[props.node.channel.id]
+				? enrolling.input?.level
 				: subscriptions()?.[props.node.channel.id]) ?? 0,
 	);
 
