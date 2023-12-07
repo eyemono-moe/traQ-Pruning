@@ -51,8 +51,8 @@ const ChannelTree: Component<{
 	const createNode = (
 		parentName: string,
 		channel: Channel,
-		sep = "/",
 		showFullName = true,
+		sep = "/",
 	): ChannelNode => {
 		const name = showFullName
 			? `${parentName}${sep}${channel.name}`
@@ -66,7 +66,7 @@ const ChannelTree: Component<{
 					const child = channelMap().get(childId);
 					if (child) {
 						// 子チャンネルがアーカイブされている場合等
-						acc.push(createNode(name, child, sep, showFullName));
+						acc.push(createNode(name, child, showFullName));
 					}
 					return acc;
 				}, [])
@@ -78,7 +78,7 @@ const ChannelTree: Component<{
 		const rootChannels = props.channels
 			.filter((c) => c.parentId === null)
 			.sort((a, b) => a.name.localeCompare(b.name));
-		return rootChannels.map((c) => createNode("", c, "", !isMobile()));
+		return rootChannels.map((c) => createNode("", c, !isMobile(), ""));
 	});
 
 	return (

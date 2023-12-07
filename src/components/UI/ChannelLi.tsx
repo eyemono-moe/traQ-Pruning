@@ -50,7 +50,7 @@ const ChannelLi: Component<{
 			});
 		},
 		{
-			invalidate: ["channels", "me"],
+			invalidate: ["subscriptions"],
 		},
 	);
 
@@ -71,9 +71,29 @@ const ChannelLi: Component<{
 				targetChannels = getChildNodes(channel, true);
 				break;
 		}
-		const levels = Object.fromEntries(
-			targetChannels.map((channelId) => [channelId, level]),
-		);
+
+		// calc diff and update only changed channels
+		let levels: { [channelId: string]: ChannelSubscribeLevel };
+		const oldSubscriptions = subscriptions();
+
+		if (oldSubscriptions) {
+			levels = Object.fromEntries(
+				targetChannels.reduce<[string, ChannelSubscribeLevel][]>(
+					(acc, channelId) => {
+						const oldLevel = oldSubscriptions?.[channelId] ?? 0;
+						if (oldLevel !== level) {
+							acc.push([channelId, level]);
+						}
+						return acc;
+					},
+					[],
+				),
+			);
+		} else {
+			levels = Object.fromEntries(
+				targetChannels.map((channelId) => [channelId, level]),
+			);
+		}
 
 		return enroll({ levels });
 	};
