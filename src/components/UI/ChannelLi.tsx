@@ -38,7 +38,7 @@ const ChannelLi: Component<{
 
 	return (
 		<ChannelContextMenu>
-			<div class="w-full overflow-x-hidden flex gap-2 text-gray-950 items-center">
+			<div class="w-full h-full overflow-x-hidden flex gap-2 text-gray-950 items-center">
 				<div class="font-bold">{props.node.fullName}</div>
 				<Show when={subscriptions()}>
 					<BellButton
