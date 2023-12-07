@@ -27,7 +27,7 @@ export default function Root() {
 				<Meta property="og:type" content="article" />
 				<Meta property="og:title" content="Q Bell" />
 				<Meta property="og:url" content="https://bell.trap.show" />
-				<Meta property="og:image" content="" />
+				<Meta property="og:image" content="https://bell.trap.show/ogp.png" />
 				<Meta
 					property="og:description"
 					content="Q Bell - traQの通知編集アプリ"
