@@ -33,6 +33,13 @@ export default function Root() {
 					content="Q Bell - traQの通知編集アプリ"
 				/>
 				<Meta property="article:author" content="@eyemono.moe" />
+				<Meta name="twitter:card" content="summary" />
+				<Meta name="twitter:title" content="Q Bell" />
+				<Meta
+					name="twitter:description"
+					content="Q Bell - traQの通知編集アプリ"
+				/>
+				<Meta name="twitter:image" content="https://bell.trap.show/ogp.png" />
 			</Head>
 			<Body class="h-100vh">
 				<Suspense>
