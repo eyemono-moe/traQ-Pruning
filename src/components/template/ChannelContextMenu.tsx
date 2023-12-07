@@ -9,7 +9,8 @@ const item =
 	"text-lg h-8 leading-none rounded flex items-center h-4 pl-6 pr-2 py-0 position-relative select-none outline-none data-[highlighted]:(outline-none bg-sky-500 text-white) data-[disabled]:(opacity-50 cursor-not-allowed pointer-events-none)";
 const itemIndicator =
 	"position-absolute left-0 h-5 w-5 inline-flex items-center justify-center";
-const subTrigger = "data-[expanded]:(bg-sky-200 text-sky-900)";
+const subTrigger =
+	"text-lg h-8 leading-none rounded flex items-center h-4 pl-6 pr-2 py-0 position-relative select-none outline-none data-[highlighted]:(outline-none bg-sky-500 text-white) data-[disabled]:(opacity-50 cursor-not-allowed pointer-events-none) data-[expanded]:(bg-sky-200 text-sky-900)";
 const separator = "h-[1px] my-1 border-t-[1px] border-slate-400";
 const label = "text-base text-slate-600 px-2 text-sm";
 const rightIcon = "ml-auto pl-5 [[data-highlighted]>&:(text-white)]";
@@ -100,7 +101,7 @@ const ChannelContextMenu: ParentComponent<{
 					<ContextMenu.Separator class={separator} />
 					<ContextMenu.Sub overlap gutter={4} shift={-8}>
 						<ContextMenu.SubTrigger
-							class={`${item} ${subTrigger}`}
+							class={subTrigger}
 							disabled={props.node.children.length === 0}
 						>
 							子階層と一括
@@ -133,7 +134,7 @@ const ChannelContextMenu: ParentComponent<{
 					</ContextMenu.Sub>
 					<ContextMenu.Sub overlap gutter={4} shift={-8}>
 						<ContextMenu.SubTrigger
-							class={`${item} ${subTrigger}`}
+							class={subTrigger}
 							disabled={props.node.children.length === 0}
 						>
 							子孫と一括
