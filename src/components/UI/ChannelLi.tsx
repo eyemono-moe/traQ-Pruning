@@ -2,6 +2,7 @@ import { Channel, ChannelSubscribeLevel } from "@traptitech/traq";
 import { Component, Show } from "solid-js";
 import { createMemo } from "solid-js";
 import { createRouteAction, useRouteData } from "solid-start";
+import { isMobile } from "~/contexts/isMobile";
 import { BASE, routeData } from "~/routes";
 import ChannelContextMenu from "../template/ChannelContextMenu";
 import BellButton from "./BellButton";
@@ -113,7 +114,11 @@ const ChannelLi: Component<{
 			handleAction={handleAction}
 		>
 			<div class="w-full h-full overflow-x-hidden flex gap-2 text-gray-950 items-center">
-				<div class="font-bold">{props.node.fullName}</div>
+				<div class="font-bold">
+					<Show when={isMobile()} fallback={props.node.fullName}>
+						{props.node.channel.name}
+					</Show>
+				</div>
 				<Show when={subscriptions()}>
 					<BellButton
 						pending={enrolling.pending}

@@ -1,6 +1,7 @@
 import { ContextMenu } from "@kobalte/core";
 import { ChannelSubscribeLevel } from "@traptitech/traq";
 import { ParentComponent } from "solid-js";
+import { A } from "solid-start";
 import { ChannelNode, HandleAction } from "../UI/ChannelLi";
 
 const container =
@@ -12,8 +13,7 @@ const itemIndicator =
 const subTrigger = "data-[expanded]:(bg-sky-200 text-sky-900)";
 const separator = "h-[1px] my-1 border-t-[1px] border-slate-400";
 const label = "text-base text-gray-600 px-2 text-sm";
-const rightIcon =
-	"ml-auto pl-5 [[data-highlighted]>&:(text-white)] i-material-symbols:arrow-forward-ios-rounded";
+const rightIcon = "ml-auto pl-5 [[data-highlighted]>&:(text-white)]";
 
 const levelToValue = (
 	level: ChannelSubscribeLevel,
@@ -100,9 +100,14 @@ const ChannelContextMenu: ParentComponent<{
 					</ContextMenu.Group>
 					<ContextMenu.Separator class={separator} />
 					<ContextMenu.Sub overlap gutter={4} shift={-8}>
-						<ContextMenu.SubTrigger class={`${item} ${subTrigger}`}>
+						<ContextMenu.SubTrigger
+							class={`${item} ${subTrigger}`}
+							disabled={props.node.children.length === 0}
+						>
 							子階層一括
-							<div class={rightIcon} />
+							<div
+								class={`${rightIcon} i-material-symbols:arrow-forward-ios-rounded`}
+							/>
 						</ContextMenu.SubTrigger>
 						<ContextMenu.Portal>
 							<ContextMenu.SubContent class={container}>
@@ -128,9 +133,14 @@ const ChannelContextMenu: ParentComponent<{
 						</ContextMenu.Portal>
 					</ContextMenu.Sub>
 					<ContextMenu.Sub overlap gutter={4} shift={-8}>
-						<ContextMenu.SubTrigger class={`${item} ${subTrigger}`}>
+						<ContextMenu.SubTrigger
+							class={`${item} ${subTrigger}`}
+							disabled={props.node.children.length === 0}
+						>
 							子孫一括
-							<div class={rightIcon} />
+							<div
+								class={`${rightIcon} i-material-symbols:arrow-forward-ios-rounded`}
+							/>
 						</ContextMenu.SubTrigger>
 						<ContextMenu.Portal>
 							<ContextMenu.SubContent class={container}>
@@ -146,6 +156,7 @@ const ChannelContextMenu: ParentComponent<{
 								>
 									未読のみ管理
 								</ContextMenu.Item>
+
 								<ContextMenu.Item
 									class={item}
 									onSelect={() => props.handleAction(2, props.node, "all")}
@@ -156,7 +167,21 @@ const ChannelContextMenu: ParentComponent<{
 						</ContextMenu.Portal>
 					</ContextMenu.Sub>
 					<ContextMenu.Separator class={separator} />
-					<ContextMenu.Item class={item}>traQで開く</ContextMenu.Item>
+					<ContextMenu.Item
+						class={item}
+						onSelect={() => {
+							window.open(
+								`https://q.trap.jp/channels/${props.node.fullName}`,
+								"_blank",
+								"noopener,noreferrer",
+							);
+						}}
+					>
+						traQで開く
+						<div
+							class={`${rightIcon} i-material-symbols:open-in-new-rounded`}
+						/>
+					</ContextMenu.Item>
 				</ContextMenu.Content>
 			</ContextMenu.Portal>
 		</ContextMenu.Root>
