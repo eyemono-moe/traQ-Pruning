@@ -73,7 +73,7 @@ const ChannelContextMenu: ParentComponent<{
 								<ContextMenu.ItemIndicator class={itemIndicator}>
 									<div class="i-material-symbols:radio-button-checked-outline" />
 								</ContextMenu.ItemIndicator>
-								なし
+								通知なし
 							</ContextMenu.RadioItem>
 							<ContextMenu.RadioItem
 								class={item}
@@ -103,7 +103,7 @@ const ChannelContextMenu: ParentComponent<{
 							class={`${item} ${subTrigger}`}
 							disabled={props.node.children.length === 0}
 						>
-							子階層一括
+							子階層と一括
 							<div
 								class={`${rightIcon} i-material-symbols:arrow-forward-ios-rounded`}
 							/>
@@ -114,7 +114,7 @@ const ChannelContextMenu: ParentComponent<{
 									class={item}
 									onSelect={() => props.handleAction(0, props.node, "children")}
 								>
-									なし
+									通知なし
 								</ContextMenu.Item>
 								<ContextMenu.Item
 									class={item}
@@ -136,7 +136,7 @@ const ChannelContextMenu: ParentComponent<{
 							class={`${item} ${subTrigger}`}
 							disabled={props.node.children.length === 0}
 						>
-							子孫一括
+							子孫と一括
 							<div
 								class={`${rightIcon} i-material-symbols:arrow-forward-ios-rounded`}
 							/>
@@ -147,7 +147,7 @@ const ChannelContextMenu: ParentComponent<{
 									class={item}
 									onSelect={() => props.handleAction(0, props.node, "all")}
 								>
-									なし
+									通知なし
 								</ContextMenu.Item>
 								<ContextMenu.Item
 									class={item}

@@ -78,10 +78,14 @@ const ChannelLi: Component<{
 				targetChannels = [channel.channel.id];
 				break;
 			case "children":
-				targetChannels = getChildNodes(channel, false);
+				targetChannels = getChildNodes(channel, false).concat(
+					channel.channel.id,
+				);
 				break;
 			case "all":
-				targetChannels = getChildNodes(channel, true);
+				targetChannels = getChildNodes(channel, true).concat(
+					channel.channel.id,
+				);
 				break;
 		}
 
