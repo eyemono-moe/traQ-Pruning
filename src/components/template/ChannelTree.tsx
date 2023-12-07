@@ -1,26 +1,37 @@
+import { Collapsible } from "@kobalte/core";
 import { Channel } from "@traptitech/traq";
 import { Component, For, Show, createMemo } from "solid-js";
+import ChannelLi, { ChannelNode } from "../UI/ChannelLi";
 
-type ChannelNode = {
-	fullName: string;
-	channelId: string;
-	children: ChannelNode[];
-};
-
-const _ChannelNode: Component<{
+const CollapsibleNodes: Component<{
 	node: ChannelNode;
 }> = (props) => {
 	return (
-		<div>
-			{props.node.fullName}
-			<Show when={props.node.children.length > 0}>
-				<ul>
+		<Show
+			when={props.node.children.length > 0}
+			fallback={
+				<div class="w-full flex gap-1 items-center hover:bg-slate-100 rounded">
+					<div class="font-bold m-1 w-8 h-8 grid place-content-center">#</div>
+					<ChannelLi node={props.node} />
+				</div>
+			}
+		>
+			<Collapsible.Root>
+				<div class="w-full flex gap-1 items-center hover:bg-slate-100 rounded">
+					<Collapsible.Trigger>
+						<div class="font-bold m-1 w-8 h-8 text-gray-800 text-lg grid place-content-center [[data-expanded]>&]:(bg-gray-800 text-gray-100) border-4 rounded border-gray-800 box-border">
+							#
+						</div>
+					</Collapsible.Trigger>
+					<ChannelLi node={props.node} />
+				</div>
+				<Collapsible.Content class="pl-2 m-0 ml-[calc(1.25rem_-_1px)] flex flex-col border-l-1 border-slate-400 animate-[slideUp] duration-300 data-[expanded]:animate-[slideDown] animate-duration-300 overflow-hidden">
 					<For each={props.node.children}>
-						{(child) => <_ChannelNode node={child} />}
+						{(child) => <CollapsibleNodes node={child} />}
 					</For>
-				</ul>
-			</Show>
-		</div>
+				</Collapsible.Content>
+			</Collapsible.Root>
+		</Show>
 	);
 };
 
@@ -45,7 +56,7 @@ const ChannelTree: Component<{
 
 		return {
 			fullName,
-			channelId: channel.id,
+			channel: channel,
 			children: channel.children
 				.reduce<ChannelNode[]>((acc, childId) => {
 					const child = channelMap().get(childId);
@@ -63,10 +74,14 @@ const ChannelTree: Component<{
 		const rootChannels = props.channels
 			.filter((c) => c.parentId === null)
 			.sort((a, b) => a.name.localeCompare(b.name));
-		return rootChannels.map((c) => createNode("#", c, ""));
+		return rootChannels.map((c) => createNode("", c, ""));
 	});
 
-	return <For each={rootNodes()}>{(node) => <_ChannelNode node={node} />}</For>;
+	return (
+		<div class="m-0 flex flex-col">
+			<For each={rootNodes()}>{(node) => <CollapsibleNodes node={node} />}</For>
+		</div>
+	);
 };
 
 export default ChannelTree;

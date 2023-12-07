@@ -20,7 +20,6 @@ const isLogin = async (request: Request) => {
 	}
 };
 
-const uncheckedPaths = ["/api/login", "/api/logout", "/api/callback"];
 const protectedPaths = ["/"];
 
 export const checkLoginMiddleware: Middleware = ({ forward }) => {

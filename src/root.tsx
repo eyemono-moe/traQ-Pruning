@@ -1,3 +1,4 @@
+import "@unocss/reset/tailwind.css";
 // @refresh reload
 import { Suspense } from "solid-js";
 import {
@@ -11,6 +12,7 @@ import {
 	Scripts,
 	Title,
 } from "solid-start";
+import "uno.css";
 
 export default function Root() {
 	return (
