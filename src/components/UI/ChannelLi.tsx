@@ -1,10 +1,12 @@
 import { Channel, ChannelSubscribeLevel } from "@traptitech/traq";
-import { Component, Show } from "solid-js";
+import { set } from "mongoose";
+import { Component, Show, createSignal } from "solid-js";
 import { createMemo } from "solid-js";
 import { useRouteData } from "solid-start";
 import { createServerAction$ } from "solid-start/server";
 import { isMobile } from "~/contexts/isMobile";
 import useApi from "~/lib/useApi";
+import useModal from "~/lib/useModal";
 import { routeData } from "~/routes";
 import ChannelContextMenu from "../template/ChannelContextMenu";
 import BellButton from "./BellButton";
@@ -92,11 +94,37 @@ const ChannelLi: Component<{
 			);
 		}
 
+		if (targetChannels.length === 0) {
+			// todo: toast
+			return;
+		}
+
+		if (targetChannels.length > 10) {
+			setChannelCount(targetChannels.length);
+			setLevel(level);
+			setOnConfirm(() => () => {
+				enroll({
+					level,
+					channels: targetChannels,
+				});
+				// todo: toast
+				close();
+			});
+			open();
+			return;
+		}
+
+		// todo: toast
 		return enroll({
 			level,
 			channels: targetChannels,
 		});
 	};
+
+	const { Modal, open, close } = useModal();
+	const [onConfirm, setOnConfirm] = createSignal(() => {});
+	const [channelCount, setChannelCount] = createSignal(0);
+	const [level, setLevel] = createSignal<ChannelSubscribeLevel>(0);
 
 	const displayLevel = createMemo(
 		() =>
@@ -106,31 +134,60 @@ const ChannelLi: Component<{
 	);
 
 	return (
-		<ChannelContextMenu
-			node={props.node}
-			pending={enrolling.pending}
-			level={displayLevel()}
-			handleAction={handleAction}
-		>
-			<div class="w-full h-full overflow-x-hidden flex gap-2 text-slate-950 items-center">
-				<div class="font-bold">
-					<Show when={isMobile()} fallback={props.node.fullName}>
-						{props.node.channel.name}
+		<>
+			<ChannelContextMenu
+				node={props.node}
+				pending={enrolling.pending}
+				level={displayLevel()}
+				handleAction={handleAction}
+			>
+				<div class="w-full h-full overflow-x-hidden flex gap-2 text-slate-950 items-center">
+					<div class="font-bold">
+						<Show when={isMobile()} fallback={props.node.fullName}>
+							{props.node.channel.name}
+						</Show>
+					</div>
+					<Show when={subscriptions()}>
+						<BellButton
+							pending={enrolling.pending}
+							level={displayLevel()}
+							node={props.node}
+							handleAction={handleAction}
+						/>
 					</Show>
+					<span class="text-sm text-slate-600 truncate">
+						{props.node.channel.topic}
+					</span>
 				</div>
-				<Show when={subscriptions()}>
-					<BellButton
-						pending={enrolling.pending}
-						level={displayLevel()}
-						node={props.node}
-						handleAction={handleAction}
-					/>
-				</Show>
-				<span class="text-sm text-slate-600 truncate">
-					{props.node.channel.topic}
-				</span>
-			</div>
-		</ChannelContextMenu>
+			</ChannelContextMenu>
+			<Modal title="通知の設定">
+				<p class="mb-4">
+					{channelCount()}個のチャンネルの通知を "
+					{level() === 0
+						? "無し"
+						: level() === 1
+						  ? "未読管理"
+						  : "未読管理+通知"}
+					" に設定します
+				</p>
+				<div class="flex justify-end gap-4">
+					<button
+						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-gray-500 text-white enabled:hover:bg-gray-600"
+						type="button"
+						onClick={close}
+					>
+						キャンセル
+					</button>
+					<button
+						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-sky-500 text-white enabled:hover:bg-sky-600"
+						type="button"
+						onClick={onConfirm()}
+					>
+						通知設定を変更する
+					</button>
+				</div>
+			</Modal>
+		</>
 	);
 };
 
