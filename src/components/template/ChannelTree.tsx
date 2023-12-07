@@ -20,7 +20,7 @@ const CollapsibleNodes: Component<{
 			<Collapsible.Root>
 				<div class="w-full overflow-x-hidden shrink-0 flex gap-1 items-center hover:bg-slate-100 rounded">
 					<Collapsible.Trigger>
-						<div class="font-bold m-1 w-8 h-8 text-gray-800 text-lg grid place-content-center [[data-expanded]>&]:(bg-gray-800 text-gray-100) border-4 rounded border-gray-800 box-border">
+						<div class="font-bold m-1 w-8 h-8 text-slate-800 text-lg grid place-content-center [[data-expanded]>&]:(bg-gray-800 text-slate-100) border-4 rounded border-gray-800 box-border">
 							#
 						</div>
 					</Collapsible.Trigger>

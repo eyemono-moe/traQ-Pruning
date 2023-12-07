@@ -1,3 +1,4 @@
+import { Image } from "@kobalte/core";
 import { Show } from "solid-js";
 import { createRouteData, useRouteData } from "solid-start";
 import ChannelTree from "~/components/template/ChannelTree";
@@ -40,17 +41,33 @@ export default function Page() {
 
 	return (
 		<main
-			class="text-base prose max-w-full w-full h-full flex justify-center overflow-y-auto overflow-x-hidden p-4"
+			class="text-base prose text-slate-950 max-w-full w-full h-full flex justify-center overflow-y-auto overflow-x-hidden p-4"
 			style={{ "scrollbar-gutter": "stable" }}
 		>
 			<div class="w-full max-w-[1000px]">
-				<h1>traQ Pruning</h1>
-				<p>
-					通知の剪定アプリです。
+				<div class="flex items-center flex-wrap mb-8">
+					<div class="flex items-baseline gap-2">
+						<h1>Q Bell</h1>
+						<p class="text-slate-600">traQの通知編集アプリ</p>
+					</div>
 					<Show when={me()}>
-						<div>logged in as {me()!.name}</div>
+						<div class="flex items-center gap-2 ml-auto text-slate-600">
+							logged in as {me()!.name}
+							<Image.Root
+								fallbackDelay={600}
+								class="inline-flex items-center justify-center align-middle w-8 h-8 rounded-full overflow-hidden select-none"
+							>
+								<Image.Img
+									src={`https://q.trap.jp/api/v3/public/icon/${me()!.name}`}
+									alt={`${me()!.name} icon`}
+								/>
+								<Image.Fallback class="w-full h-full flex items-center justify-center bg-sky-500 text-white text-xl font-bold">
+									{me()!.name.charAt(0)}
+								</Image.Fallback>
+							</Image.Root>
+						</div>
 					</Show>
-				</p>
+				</div>
 				<Show when={channels()}>
 					<ChannelTree channels={channels()!} />
 				</Show>

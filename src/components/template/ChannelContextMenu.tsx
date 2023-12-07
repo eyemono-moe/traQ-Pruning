@@ -12,7 +12,7 @@ const itemIndicator =
 	"position-absolute left-0 h-5 w-5 inline-flex items-center justify-center";
 const subTrigger = "data-[expanded]:(bg-sky-200 text-sky-900)";
 const separator = "h-[1px] my-1 border-t-[1px] border-slate-400";
-const label = "text-base text-gray-600 px-2 text-sm";
+const label = "text-base text-slate-600 px-2 text-sm";
 const rightIcon = "ml-auto pl-5 [[data-highlighted]>&:(text-white)]";
 
 const levelToValue = (

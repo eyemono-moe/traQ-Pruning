@@ -113,7 +113,7 @@ const ChannelLi: Component<{
 			level={displayLevel()}
 			handleAction={handleAction}
 		>
-			<div class="w-full h-full overflow-x-hidden flex gap-2 text-gray-950 items-center">
+			<div class="w-full h-full overflow-x-hidden flex gap-2 text-slate-950 items-center">
 				<div class="font-bold">
 					<Show when={isMobile()} fallback={props.node.fullName}>
 						{props.node.channel.name}
@@ -127,7 +127,7 @@ const ChannelLi: Component<{
 						handleAction={handleAction}
 					/>
 				</Show>
-				<span class="text-sm text-gray-600 truncate">
+				<span class="text-sm text-slate-600 truncate">
 					{props.node.channel.topic}
 				</span>
 			</div>
