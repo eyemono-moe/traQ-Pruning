@@ -45,10 +45,10 @@ export default function Page() {
 
 	return (
 		<main
-			class="text-base prose text-slate-950 max-w-full w-full h-full flex justify-center overflow-y-auto overflow-x-hidden p-4"
+			class="text-base prose text-slate-950 max-w-full w-full flex justify-center overflow-y-auto overflow-x-hidden p-4"
 			style={{ "scrollbar-gutter": "stable" }}
 		>
-			<div class="w-full max-w-[1000px]">
+			<div class="w-full h-full overflow-y-hidden max-w-[1000px]">
 				<div class="flex items-center flex-wrap mb-8">
 					<div class="flex items-baseline gap-2">
 						<h1>Q Bell</h1>
