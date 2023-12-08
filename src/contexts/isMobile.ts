@@ -8,7 +8,7 @@ import {
 
 const VIEWPORT_SIZE_QUERY = "screen and (max-width: 640px)";
 
-const createColorScheme = () => {
+const createMobileContext = () => {
 	const [isMobile, setIsMobile] = createSignal(false);
 
 	const onChange = () =>
@@ -28,4 +28,4 @@ const createColorScheme = () => {
 	return isMobile;
 };
 
-export const isMobile = createRoot(createColorScheme);
+export const isMobile = createRoot(createMobileContext);

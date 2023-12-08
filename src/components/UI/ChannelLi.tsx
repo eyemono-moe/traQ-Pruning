@@ -1,10 +1,11 @@
 import { Channel, ChannelSubscribeLevel } from "@traptitech/traq";
 import { set } from "mongoose";
-import { Component, Show, createSignal } from "solid-js";
+import { Component, Show, createEffect, createSignal } from "solid-js";
 import { createMemo } from "solid-js";
 import { useRouteData } from "solid-start";
 import { createServerAction$ } from "solid-start/server";
 import { isMobile } from "~/contexts/isMobile";
+import { usePending } from "~/contexts/pending";
 import useApi from "~/lib/useApi";
 import useModal from "~/lib/useModal";
 import { routeData } from "~/routes";
@@ -40,8 +41,9 @@ const ChannelLi: Component<{
 	node: ChannelNode;
 }> = (props) => {
 	const { subscriptions } = useRouteData<typeof routeData>();
+	const { setPending, clearPending, pendingLevel } = usePending;
 
-	const [enrolling, enroll] = createServerAction$(
+	const [_, enroll] = createServerAction$(
 		async (
 			payload: {
 				level: ChannelSubscribeLevel;
@@ -49,16 +51,16 @@ const ChannelLi: Component<{
 			},
 			event,
 		) => {
-			try {
-				const api = await useApi(event.request);
-				for (const channelId of payload.channels) {
+			const api = await useApi(event.request);
+			for (const channelId of payload.channels) {
+				try {
 					await api.setChannelSubscribeLevel(channelId, {
 						level: payload.level,
 					});
-					await sleep(100);
+				} catch (e) {
+					console.error(e);
 				}
-			} catch (e) {
-				console.error(e);
+				await sleep(100);
 			}
 			return;
 		},
@@ -107,10 +109,11 @@ const ChannelLi: Component<{
 			setChannelCount(targetChannels.length);
 			setLevel(level);
 			setOnConfirm(() => () => {
+				const reqId = setPending(targetChannels, level);
 				enroll({
 					level,
 					channels: targetChannels,
-				});
+				}).then(() => clearPending(reqId));
 				// todo: toast
 				close();
 			});
@@ -119,10 +122,11 @@ const ChannelLi: Component<{
 		}
 
 		// todo: toast
+		const reqId = setPending(targetChannels, level);
 		return enroll({
 			level,
 			channels: targetChannels,
-		});
+		}).then(() => clearPending(reqId));
 	};
 
 	const { Modal, open, close } = useModal();
@@ -130,22 +134,21 @@ const ChannelLi: Component<{
 	const [channelCount, setChannelCount] = createSignal(0);
 	const [level, setLevel] = createSignal<ChannelSubscribeLevel>(0);
 
+	const _pendingLevel = createMemo(() => pendingLevel(props.node.channel.id));
 	const displayLevel = createMemo(
-		() =>
-			(enrolling.pending
-				? enrolling.input?.level
-				: subscriptions()?.[props.node.channel.id]) ?? 0,
+		() => _pendingLevel() ?? subscriptions()?.[props.node.channel.id] ?? 0,
 	);
+	const isPending = createMemo(() => _pendingLevel() !== undefined);
 
 	return (
 		<>
 			<ChannelContextMenu
 				node={props.node}
-				pending={enrolling.pending}
+				pending={isPending()}
 				level={displayLevel()}
 				handleAction={handleAction}
 			>
-				<div class="w-full h-full overflow-x-hidden flex gap-2 text-slate-950 items-center">
+				<div class="w-full h-full overflow-hidden flex gap-2 text-slate-950 items-center">
 					<div class="font-bold">
 						<Show when={isMobile()} fallback={props.node.fullName}>
 							{props.node.channel.name}
@@ -153,7 +156,7 @@ const ChannelLi: Component<{
 					</div>
 					<Show when={subscriptions()}>
 						<BellButton
-							pending={enrolling.pending}
+							pending={isPending()}
 							level={displayLevel()}
 							node={props.node}
 							handleAction={handleAction}

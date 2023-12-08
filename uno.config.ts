@@ -14,16 +14,11 @@ export default defineConfig({
       },
     }),
   ],
-  theme: {
-    transitionDuration: {
-      DEFAULT: "200ms",
-    },
-  },
   transformers: [transformerVariantGroup()],
   preflights: [
     {
       getCSS: () => `
-        @keyframes slideDown {
+        @keyframes slide-down {
           from {
             height: 0;
           }
@@ -31,12 +26,38 @@ export default defineConfig({
             height: var(--kb-collapsible-content-height);
           }
         }
-        @keyframes slideUp {
+        @keyframes slide-up {
           from {
             height: var(--kb-collapsible-content-height);
           }
           to {
             height: 0;
+          }
+        }
+        @keyframes shake-small {
+          from,
+          to {
+            transform-origin: 50% 0;
+            transform: rotate(0deg);
+            opacity: 0.75;
+          }
+          18% {
+            transform: rotate(10deg);
+          }
+          30% {
+            transform: rotate(-10deg);
+          }
+          50% {
+            opacity: 0.5;
+          }
+          42% {
+            transform: rotate(5deg);
+          }
+          54% {
+            transform: rotate(-5deg);
+          }
+          66% {
+            transform: rotate(0deg);
           }
         }
       `,

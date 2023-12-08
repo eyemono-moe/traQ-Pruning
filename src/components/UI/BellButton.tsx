@@ -28,8 +28,8 @@ const BellButton: Component<{
 		<button
 			type="button"
 			onClick={handleClick}
-			class={`w-8 h-8 shrink-0 grid place-content-center hover:enabled:bg-sky-200 rounded transition-colors duration-200 ${
-				props.pending ? "animate-pulse cursor-wait" : ""
+			class={`w-8 h-8 shrink-0 grid place-content-center hover:enabled:bg-sky-200 hover:disabled:bg-gray-200 rounded transition-colors duration-200 overflow-hidden ${
+				props.pending ? "cursor-wait" : ""
 			} ${props.node.channel.force ? "cursor-not-allowed" : ""}`}
 			disabled={props.node.channel.force || props.pending}
 			title={
@@ -55,6 +55,10 @@ const BellButton: Component<{
 								  "i-custom:notifications-dot"
 							  : // 未読管理+通知
 								  "i-material-symbols:notifications-rounded"
+				} ${
+					props.pending
+						? "animate-[shake-small_1.4s_ease-in-out_infinite] "
+						: ""
 				}`}
 			/>
 		</button>

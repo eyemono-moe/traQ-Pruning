@@ -25,7 +25,7 @@ const CollapsibleNodes: Component<{
 					</Collapsible.Trigger>
 					<ChannelLi node={props.node} />
 				</div>
-				<Collapsible.Content class="pl-2 m-0 ml-[calc(1.25rem_-_1px)] flex flex-col border-l-1 border-slate-400 animate-[slideUp] overflow-hidden animate-duration-150 data-[expanded]:(animate-[slideDown] animate-duration-150) ">
+				<Collapsible.Content class="pl-2 m-0 ml-[calc(1.25rem_-_1px)] flex flex-col border-l-1 border-slate-400 animate-[slide-up_0.2s] overflow-hidden data-[expanded]:(animate-[slide-down_0.2s])">
 					<For each={props.node.children}>
 						{(child) => <CollapsibleNodes node={child} />}
 					</For>
