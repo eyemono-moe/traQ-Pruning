@@ -1,10 +1,4 @@
-import {
-	createEffect,
-	createRoot,
-	createSignal,
-	onCleanup,
-	onMount,
-} from "solid-js";
+import { createRoot, createSignal, onCleanup, onMount } from "solid-js";
 
 const VIEWPORT_SIZE_QUERY = "screen and (max-width: 640px)";
 

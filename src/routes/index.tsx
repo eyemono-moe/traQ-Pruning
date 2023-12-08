@@ -1,8 +1,9 @@
 import { Image } from "@kobalte/core";
 import { ChannelSubscribeLevel } from "@traptitech/traq";
-import { Show, onMount } from "solid-js";
+import { Show } from "solid-js";
 import { useRouteData } from "solid-start";
 import { createServerData$ } from "solid-start/server";
+import { Toaster } from "solid-toast";
 import ChannelTree from "~/components/template/ChannelTree";
 import useApi from "~/lib/useApi";
 
@@ -74,6 +75,7 @@ export default function Page() {
 				<Show when={channels()}>
 					<ChannelTree channels={channels()!} />
 				</Show>
+				<Toaster position="bottom-right" />
 			</div>
 		</main>
 	);

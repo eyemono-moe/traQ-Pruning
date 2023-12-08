@@ -1,9 +1,9 @@
 import { Channel, ChannelSubscribeLevel } from "@traptitech/traq";
-import { set } from "mongoose";
-import { Component, Show, createEffect, createSignal } from "solid-js";
+import { Component, Show, createSignal } from "solid-js";
 import { createMemo } from "solid-js";
 import { useRouteData } from "solid-start";
 import { createServerAction$ } from "solid-start/server";
+import toast from "solid-toast";
 import { isMobile } from "~/contexts/isMobile";
 import { usePending } from "~/contexts/pending";
 import useApi from "~/lib/useApi";
@@ -69,6 +69,14 @@ const ChannelLi: Component<{
 		},
 	);
 
+	const toastHandler = (promise: Promise<unknown>, count: number) => {
+		toast.promise(promise, {
+			loading: `updating ${count} channels...`,
+			success: "updated successfully",
+			error: "failed to update",
+		});
+	};
+
 	const handleAction = (
 		level: ChannelSubscribeLevel,
 		channel: ChannelNode,
@@ -101,7 +109,7 @@ const ChannelLi: Component<{
 		}
 
 		if (targetChannels.length === 0) {
-			// todo: toast
+			toast("no changes");
 			return;
 		}
 
@@ -110,11 +118,13 @@ const ChannelLi: Component<{
 			setLevel(level);
 			setOnConfirm(() => () => {
 				const reqId = setPending(targetChannels, level);
-				enroll({
-					level,
-					channels: targetChannels,
-				}).then(() => clearPending(reqId));
-				// todo: toast
+				toastHandler(
+					enroll({
+						level,
+						channels: targetChannels,
+					}).then(() => clearPending(reqId)),
+					targetChannels.length,
+				);
 				close();
 			});
 			open();
@@ -123,10 +133,13 @@ const ChannelLi: Component<{
 
 		// todo: toast
 		const reqId = setPending(targetChannels, level);
-		return enroll({
-			level,
-			channels: targetChannels,
-		}).then(() => clearPending(reqId));
+		return toastHandler(
+			enroll({
+				level,
+				channels: targetChannels,
+			}).then(() => clearPending(reqId)),
+			targetChannels.length,
+		);
 	};
 
 	const { Modal, open, close } = useModal();
