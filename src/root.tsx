@@ -24,6 +24,7 @@ export default function Root() {
 				<Meta name="viewport" content="width=device-width, initial-scale=1" />
 				<Link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 				{/* OGP */}
+				<Meta name="description" content="Q Bell - traQの通知編集アプリ" />
 				<Meta property="og:type" content="article" />
 				<Meta property="og:title" content="Q Bell" />
 				<Meta property="og:url" content="https://bell.trap.show" />

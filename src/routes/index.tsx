@@ -15,7 +15,9 @@ export const routeData = () => {
 	const me = createServerData$(async (_, event) => {
 		const api = await useApi(event.request);
 		const { data: me } = await api.getMe();
-		return me;
+		return {
+			name: me.name,
+		};
 	});
 	const channels = createServerData$(async (_, event) => {
 		const api = await useApi(event.request);
