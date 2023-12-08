@@ -1,11 +1,12 @@
 import { Apis, Configuration } from "@traptitech/traq";
 import { type APIEvent, redirect } from "solid-start/api";
 import env from "~/lib/env";
-import { session } from "~/lib/session";
+import { getCodeVerifier, session } from "~/lib/session";
 
 export const GET = async (event: APIEvent) => {
 	const code = new URL(event.request.url).searchParams.get("code");
-	if (!code) {
+	const codeVerifier = await getCodeVerifier(event.request);
+	if (!code || !codeVerifier) {
 		return redirect("/api/login");
 	}
 	const clientId = env("TRAQ_CLIENT_ID");
@@ -15,6 +16,7 @@ export const GET = async (event: APIEvent) => {
 		code,
 		undefined,
 		clientId,
+		codeVerifier,
 	);
 	const loggedInApi = new Apis(
 		new Configuration({

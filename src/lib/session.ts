@@ -10,6 +10,7 @@ const storage = createCookieSessionStorage({
 		secure: env("NODE_ENV") === "production",
 		secrets: [env("SESSION_SECRET")],
 		maxAge: 60 * 60 * 24 * 7, // 1 week
+		httpOnly: true,
 	},
 });
 
@@ -30,13 +31,34 @@ const getUserId = async (request: Request) => {
 	return userId;
 };
 
-const getSessionData = async (request: Request, db: SessionDB) => {
+const getTokenData = async (request: Request, db: SessionDB) => {
 	const userId = await getUserId(request);
 	if (!userId) return null;
 	return db.get(userId);
 };
 
-const createSession = async (userId: string, redirectTo = "/") => {
+export const setCodeVerifierAndRedirect = async (
+	request: Request,
+	codeVerifier: string,
+	redirectTo: string,
+) => {
+	const session = await getUserSession(request);
+	session.set("codeVerifier", codeVerifier);
+	return redirect(redirectTo, {
+		headers: {
+			"Set-Cookie": await storage.commitSession(session),
+		},
+	});
+};
+
+export const getCodeVerifier = async (request: Request) => {
+	const session = await getUserSession(request);
+	const codeVerifier = session.get("codeVerifier");
+	if (!codeVerifier || typeof codeVerifier !== "string") return null;
+	return codeVerifier;
+};
+
+const addUserIdToSession = async (userId: string, redirectTo = "/") => {
 	const session = await storage.getSession();
 	session.set("userId", userId);
 	return redirect(redirectTo, {
@@ -53,7 +75,7 @@ const createSessionData = async (
 	redirectTo = "/",
 ) => {
 	await db.set(userId, token);
-	return createSession(userId, redirectTo);
+	return addUserIdToSession(userId, redirectTo);
 };
 
 const deleteSession = async (request: Request, redirectTo = "/") => {
@@ -76,7 +98,7 @@ const deleteSessionData = async (
 };
 
 const sessionFactory = (db: SessionDB) => ({
-	getSessionData: (request: Request) => getSessionData(request, db),
+	getSessionData: (request: Request) => getTokenData(request, db),
 	createSessionData: (userId: string, token: string, redirectTo = "/") =>
 		createSessionData(userId, token, db, redirectTo),
 	deleteSessionData: (request: Request, userId: string, redirectTo = "/") =>
