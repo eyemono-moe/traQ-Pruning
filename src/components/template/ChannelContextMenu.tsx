@@ -67,6 +67,7 @@ const ChannelContextMenu: ParentComponent<{
 							disabled={props.node.channel.force || props.pending}
 						>
 							<ContextMenu.RadioItem
+								closeOnSelect
 								class={item}
 								value="none"
 								disabled={props.node.channel.force || props.pending}
@@ -77,6 +78,7 @@ const ChannelContextMenu: ParentComponent<{
 								通知なし
 							</ContextMenu.RadioItem>
 							<ContextMenu.RadioItem
+								closeOnSelect
 								class={item}
 								value="notify"
 								disabled={props.node.channel.force || props.pending}
@@ -87,6 +89,7 @@ const ChannelContextMenu: ParentComponent<{
 								未読のみ管理
 							</ContextMenu.RadioItem>
 							<ContextMenu.RadioItem
+								closeOnSelect
 								class={item}
 								value="subscribe"
 								disabled={props.node.channel.force || props.pending}
@@ -112,18 +115,21 @@ const ChannelContextMenu: ParentComponent<{
 						<ContextMenu.Portal>
 							<ContextMenu.SubContent class={container}>
 								<ContextMenu.Item
+									closeOnSelect
 									class={item}
 									onSelect={() => props.handleAction(0, props.node, "children")}
 								>
 									通知なし
 								</ContextMenu.Item>
 								<ContextMenu.Item
+									closeOnSelect
 									class={item}
 									onSelect={() => props.handleAction(1, props.node, "children")}
 								>
 									未読のみ管理
 								</ContextMenu.Item>
 								<ContextMenu.Item
+									closeOnSelect
 									class={item}
 									onSelect={() => props.handleAction(2, props.node, "children")}
 								>
@@ -145,12 +151,14 @@ const ChannelContextMenu: ParentComponent<{
 						<ContextMenu.Portal>
 							<ContextMenu.SubContent class={container}>
 								<ContextMenu.Item
+									closeOnSelect
 									class={item}
 									onSelect={() => props.handleAction(0, props.node, "all")}
 								>
 									通知なし
 								</ContextMenu.Item>
 								<ContextMenu.Item
+									closeOnSelect
 									class={item}
 									onSelect={() => props.handleAction(1, props.node, "all")}
 								>
@@ -158,6 +166,7 @@ const ChannelContextMenu: ParentComponent<{
 								</ContextMenu.Item>
 
 								<ContextMenu.Item
+									closeOnSelect
 									class={item}
 									onSelect={() => props.handleAction(2, props.node, "all")}
 								>
@@ -168,6 +177,7 @@ const ChannelContextMenu: ParentComponent<{
 					</ContextMenu.Sub>
 					<ContextMenu.Separator class={separator} />
 					<ContextMenu.Item
+						closeOnSelect
 						class={item}
 						onSelect={() => {
 							window.open(

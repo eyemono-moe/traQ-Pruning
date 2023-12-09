@@ -13,11 +13,17 @@ import {
 	Scripts,
 	Title,
 } from "solid-start";
+import { Toaster } from "solid-toast";
 import "uno.css";
 
 export default function Root() {
 	return (
-		<Html lang="ja">
+		<Html
+			lang="ja"
+			style={{
+				"scrollbar-gutter": "stable",
+			}}
+		>
 			<Head>
 				<Title>Q Bell - traQの通知管理アプリ</Title>
 				<Meta charset="utf-8" />
@@ -42,12 +48,13 @@ export default function Root() {
 				/>
 				<Meta name="twitter:image" content="https://bell.trap.show/ogp.png" />
 			</Head>
-			<Body class="h-100vh">
+			<Body class="text-base prose max-w-full text-slate-950">
 				<Suspense>
 					<ErrorBoundary>
 						<Routes>
 							<FileRoutes />
 						</Routes>
+						<Toaster position="bottom-right" />
 					</ErrorBoundary>
 				</Suspense>
 				<Scripts />

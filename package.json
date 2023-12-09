@@ -23,6 +23,7 @@
   },
   "packageManager": "pnpm@8.6.0",
   "dependencies": {
+    "@iconify-json/logos": "^1.1.40",
     "@iconify-json/material-symbols": "^1.1.65",
     "@kobalte/core": "^0.11.2",
     "@solidjs/meta": "^0.29.1",

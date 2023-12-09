@@ -78,7 +78,7 @@ const ChannelTree: Component<{
 	});
 
 	return (
-		<div class="m-0 flex flex-col">
+		<div class="w-full overflow-hidden flex flex-col">
 			<For each={rootNodes()}>{(node) => <CollapsibleNodes node={node} />}</For>
 		</div>
 	);
