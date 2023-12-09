@@ -2,7 +2,6 @@ import { ChannelSubscribeLevel } from "@traptitech/traq";
 import { Show } from "solid-js";
 import { useRouteData } from "solid-start";
 import { createServerData$ } from "solid-start/server";
-import Footer from "~/components/layout/Footer";
 import Header from "~/components/layout/Header";
 import ChannelTree from "~/components/template/ChannelTree";
 import useApi from "~/lib/useApi";
@@ -46,14 +45,13 @@ export default function Page() {
 	const { channels } = useRouteData<typeof routeData>();
 
 	return (
-		<main class="w-full min-h-100vh p-4 overflow-y-auto overflow-x-hidden grid gap-4 grid-rows-[auto_1fr_auto] justify-items-center">
+		<main class="w-full min-h-100vh p-4 overflow-y-auto overflow-x-hidden grid gap-4 grid-rows-[auto_1fr] justify-items-center">
 			<Header />
 			<div class="w-full max-w-1000px overflow-x-hidden">
 				<Show when={channels()}>
 					<ChannelTree channels={channels()!} />
 				</Show>
 			</div>
-			<Footer />
 		</main>
 	);
 }

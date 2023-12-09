@@ -3,6 +3,11 @@ import { Channel } from "@traptitech/traq";
 import { Component, For, Show, createMemo } from "solid-js";
 import ChannelLi, { ChannelNode } from "../UI/ChannelLi";
 
+const container =
+	"w-full overflow-x-hidden shrink-0 flex gap-1 items-stretch hover:bg-slate-100 rounded has-[[data-expanded][id*=context],[data-expanded][id*=dropdown]]:bg-slate-100";
+const hashTag =
+	"font-bold w-8 m-1 h-8 grid place-content-center shrink-0 text-slate-800 text-lg";
+
 const CollapsibleNodes: Component<{
 	node: ChannelNode;
 }> = (props) => {
@@ -10,16 +15,18 @@ const CollapsibleNodes: Component<{
 		<Show
 			when={props.node.children.length > 0}
 			fallback={
-				<div class="w-full overflow-x-hidden shrink-0 flex gap-1 items-center hover:bg-slate-100 rounded">
-					<div class="font-bold m-1 w-8 h-8 grid place-content-center">#</div>
+				<div class={container}>
+					<div class={hashTag}>#</div>
 					<ChannelLi node={props.node} />
 				</div>
 			}
 		>
 			<Collapsible.Root>
-				<div class="w-full overflow-x-hidden shrink-0 flex gap-1 items-center hover:bg-slate-100 rounded">
+				<div class={container}>
 					<Collapsible.Trigger>
-						<div class="font-bold m-1 w-8 h-8 text-slate-800 text-lg grid place-content-center [[data-expanded]>&]:(bg-gray-800 text-slate-100) border-4 rounded border-gray-800 box-border">
+						<div
+							class={`${hashTag} border-4 rounded border-gray-800 [[data-expanded]>&]:(bg-gray-800 text-slate-100) transition-colors`}
+						>
 							#
 						</div>
 					</Collapsible.Trigger>

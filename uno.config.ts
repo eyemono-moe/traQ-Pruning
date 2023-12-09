@@ -14,6 +14,20 @@ export default defineConfig({
       },
     }),
   ],
+  variants: [
+    // has:()
+    (matcher) => {
+      const regexp = /^has-\[(.*)\]:/;
+      const match = regexp.exec(matcher);
+      if (!match) return matcher;
+      const [matched, target] = match;
+
+      return {
+        matcher: matcher.slice(matched.length),
+        selector: s => `${s}:has(${target})`
+      }
+    }
+  ],
   transformers: [transformerVariantGroup()],
   preflights: [
     {

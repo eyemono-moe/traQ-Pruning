@@ -9,7 +9,7 @@ import { usePending } from "~/contexts/pending";
 import useApi from "~/lib/useApi";
 import useModal from "~/lib/useModal";
 import { routeData } from "~/routes";
-import ChannelContextMenu from "../template/ChannelContextMenu";
+import Menu from "../template/Menu";
 import BellButton from "./BellButton";
 
 export type ChannelNode = {
@@ -155,7 +155,8 @@ const ChannelLi: Component<{
 
 	return (
 		<>
-			<ChannelContextMenu
+			<Menu
+				type="context"
 				node={props.node}
 				pending={isPending()}
 				level={displayLevel()}
@@ -175,11 +176,20 @@ const ChannelLi: Component<{
 							handleAction={handleAction}
 						/>
 					</Show>
+					<Menu
+						type="dropdown"
+						node={props.node}
+						pending={isPending()}
+						level={displayLevel()}
+						handleAction={handleAction}
+					>
+						<div class="w-6 h-6 color-gray-600 i-material-symbols:more-horiz" />
+					</Menu>
 					<span class="text-sm text-slate-600 truncate">
 						{props.node.channel.topic}
 					</span>
 				</div>
-			</ChannelContextMenu>
+			</Menu>
 			<Modal title="通知の設定">
 				<p class="mb-4">
 					{channelCount()}個のチャンネルの通知を "
