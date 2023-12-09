@@ -49,7 +49,7 @@ export default function Root() {
 				/>
 				<Meta name="twitter:image" content="https://bell.trap.show/ogp.png" />
 			</Head>
-			<Body class="text-base prose max-w-full">
+			<Body class="text-base prose max-w-full data-[kb-scroll-lock]:pr-0!">
 				<Suspense>
 					<ErrorBoundary>
 						<Routes>
