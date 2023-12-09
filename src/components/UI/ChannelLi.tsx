@@ -162,7 +162,7 @@ const ChannelLi: Component<{
 				level={displayLevel()}
 				handleAction={handleAction}
 			>
-				<div class="w-full h-full overflow-hidden flex gap-2 text-slate-950 items-center">
+				<div class="w-full h-full overflow-hidden flex gap-2 items-center">
 					<div class="font-bold">
 						<Show when={isMobile()} fallback={props.node.fullName}>
 							{props.node.channel.name}
@@ -183,7 +183,7 @@ const ChannelLi: Component<{
 						level={displayLevel()}
 						handleAction={handleAction}
 					>
-						<div class="w-6 h-6 color-gray-600 i-material-symbols:more-horiz" />
+						<div class="w-6 h-6 i-material-symbols:more-horiz" />
 					</Menu>
 					<span class="text-sm text-slate-600 truncate">
 						{props.node.channel.topic}
@@ -202,14 +202,14 @@ const ChannelLi: Component<{
 				</p>
 				<div class="flex justify-end gap-4">
 					<button
-						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-gray-500 text-white enabled:hover:bg-gray-600"
+						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-slate-600 text-white enabled:hover:bg-slate-700"
 						type="button"
 						onClick={close}
 					>
 						キャンセル
 					</button>
 					<button
-						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-sky-500 text-white enabled:hover:bg-sky-600"
+						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-indigo-600 text-white enabled:hover:bg-indigo-700"
 						type="button"
 						onClick={onConfirm()}
 					>

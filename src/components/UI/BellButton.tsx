@@ -28,7 +28,7 @@ const BellButton: Component<{
 		<button
 			type="button"
 			onClick={handleClick}
-			class={`w-8 h-8 shrink-0 grid place-content-center hover:enabled:bg-sky-200 hover:disabled:bg-gray-200 rounded transition-colors duration-200 overflow-hidden ${
+			class={`w-8 h-8 shrink-0 grid place-content-center hover:enabled:bg-indigo-200 hover:disabled:bg-slate-200 rounded transition-colors duration-200 overflow-hidden ${
 				props.pending ? "cursor-wait" : ""
 			} ${props.node.channel.force ? "cursor-not-allowed" : ""}`}
 			disabled={props.node.channel.force || props.pending}
@@ -43,7 +43,7 @@ const BellButton: Component<{
 			}
 		>
 			<div
-				class={`w-6 h-6 color-gray-800 ${
+				class={`w-6 h-6 ${
 					props.node.channel.force
 						? // 強制通知
 						  "i-material-symbols:notifications-rounded opacity-50"

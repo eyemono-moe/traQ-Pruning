@@ -23,6 +23,7 @@ export default function Root() {
 			style={{
 				"scrollbar-gutter": "stable",
 			}}
+			class="text-slate-800"
 		>
 			<Head>
 				<Title>Q Bell - traQの通知管理アプリ</Title>
@@ -48,7 +49,7 @@ export default function Root() {
 				/>
 				<Meta name="twitter:image" content="https://bell.trap.show/ogp.png" />
 			</Head>
-			<Body class="text-base prose max-w-full text-slate-950">
+			<Body class="text-base prose max-w-full">
 				<Suspense>
 					<ErrorBoundary>
 						<Routes>

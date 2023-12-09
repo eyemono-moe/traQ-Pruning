@@ -26,7 +26,7 @@ export default defineConfig({
         matcher: matcher.slice(matched.length),
         selector: s => `${s}:has(${target})`
       }
-    }
+    },
   ],
   transformers: [transformerVariantGroup()],
   preflights: [
