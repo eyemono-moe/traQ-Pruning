@@ -43,12 +43,29 @@ export const routeData = () => {
 
 export default function Page() {
 	const { channels } = useRouteData<typeof routeData>();
+	const handleLogin = () => {
+		window.location.href = `${BASE}/api/login`;
+	};
 
 	return (
 		<main class="w-full min-h-100vh p-4 overflow-y-auto overflow-x-hidden grid gap-4 grid-rows-[auto_1fr] justify-items-center">
 			<Header />
 			<div class="w-full max-w-1000px overflow-x-hidden">
-				<Show when={channels()}>
+				<Show
+					when={channels()}
+					fallback={
+						<div class="w-full h-full flex flex-col gap-4 justify-center items-center">
+							本サービスを利用するにはtraQでログインする必要があります
+							<button
+								onClick={handleLogin}
+								type="button"
+								class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-indigo-600 text-white enabled:hover:bg-indigo-700"
+							>
+								traQでログイン
+							</button>
+						</div>
+					}
+				>
 					<ChannelTree channels={channels()!} />
 				</Show>
 			</div>

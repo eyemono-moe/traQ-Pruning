@@ -19,22 +19,11 @@ const Header: Component = () => {
 					</Show>
 				</div>
 				<div class="flex items-center gap-4 ml-auto">
-					<a
-						href="https://github.com/eyemono-moe/traQ-Pruning"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<div class="w-8 h-8 i-logos:github-icon" />
-					</a>
-					<button
-						type="button"
-						onClick={open}
-						class="w-8 h-8 appearance-none i-material-symbols:help-outline"
-					/>
 					<Show when={me()}>
 						<Image.Root
 							fallbackDelay={600}
 							class="w-8 h-8 inline-flex items-center justify-center rounded-full overflow-hidden select-none"
+							title={`Logged in as ${me()!.name}`}
 						>
 							<Image.Img
 								src={`https://q.trap.jp/api/v3/public/icon/${me()!.name}`}
@@ -45,6 +34,18 @@ const Header: Component = () => {
 							</Image.Fallback>
 						</Image.Root>
 					</Show>
+					<button
+						type="button"
+						onClick={open}
+						class="w-8 h-8 appearance-none i-material-symbols:help-outline"
+					/>
+					<a
+						href="https://github.com/eyemono-moe/traQ-Pruning"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<div class="w-8 h-8 i-logos:github-icon" />
+					</a>
 				</div>
 			</div>
 			<Modal title="使い方">
