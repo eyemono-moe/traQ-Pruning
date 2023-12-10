@@ -104,7 +104,7 @@ const ChannelLi: Component<{
 
 		if (oldSubscriptions) {
 			targetChannels = targetChannels.filter(
-				(channelId) => oldSubscriptions[channelId] !== level,
+				(channelId) => (oldSubscriptions[channelId] ?? 0) !== level,
 			);
 		}
 
