@@ -24,7 +24,7 @@ const CollapsibleNodes: Component<{
 			<Collapsible.Root>
 				<div class={container}>
 					<Collapsible.Trigger
-						class={`${hashTag} border-3 rounded border-slate-800 dark:border-slate-100 data-[expanded]:(bg-slate-800 prose-invert dark:(color-slate-800 bg-slate-100)) transition-colors`}
+						class={`${hashTag} border-4 rounded border-slate-800 dark:border-slate-100 data-[expanded]:(bg-slate-800 prose-invert dark:(color-slate-800 bg-slate-100)) transition-colors`}
 					>
 						#
 					</Collapsible.Trigger>
