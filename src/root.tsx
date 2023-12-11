@@ -44,7 +44,7 @@ export default function Root() {
 				<Meta name="twitter:image" content="https://bell.trap.show/ogp.png" />
 			</Head>
 			<Body
-				class="prose-slate dark:prose-zinc text-base prose dark:prose-invert max-w-full data-[kb-scroll-lock]:pr-0! bg-white dark:bg-dark-800 transition-colors overflow-y-auto"
+				class="h-100vh prose-slate dark:prose-zinc text-base prose dark:prose-invert max-w-full data-[kb-scroll-lock]:pr-0! bg-white dark:bg-dark-800 transition-colors overflow-y-auto"
 				style={{
 					"scrollbar-gutter": "stable",
 				}}
