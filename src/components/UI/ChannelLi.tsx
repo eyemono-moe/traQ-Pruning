@@ -185,9 +185,7 @@ const ChannelLi: Component<{
 					>
 						<div class="w-6 h-6 i-material-symbols:more-horiz" />
 					</Menu>
-					<span class="text-sm text-slate-600 truncate">
-						{props.node.channel.topic}
-					</span>
+					<span class="text-sm truncate">{props.node.channel.topic}</span>
 				</div>
 			</Menu>
 			<Modal title="通知の設定">
@@ -209,7 +207,7 @@ const ChannelLi: Component<{
 						キャンセル
 					</button>
 					<button
-						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-indigo-600 text-white enabled:hover:bg-indigo-700"
+						class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-sky-600 text-white enabled:hover:bg-sky-700 dark:(bg-sky-500 enabled:hover:bg-sky-600)"
 						type="button"
 						onClick={onConfirm()}
 					>

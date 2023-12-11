@@ -15,7 +15,7 @@ const useModal = () => {
 						<Dialog.Content
 							onEscapeKeyDown={close}
 							onPointerDownOutside={close}
-							class="max-w-[500px] p-4 w-full rounded shadow-lg bg-white z-50 data-[expanded]:(animate-fade-in animate-duration-150) animate-fade-out animate-duration-150"
+							class="p-4 max-w-full rounded shadow-lg bg-white dark:(shadow-dark-200 bg-dark-300) z-50 data-[expanded]:(animate-fade-in animate-duration-150) animate-fade-out animate-duration-150"
 						>
 							<div class="flex items-center justify-between mb-4">
 								<Dialog.Title class="m-0 text-lg font-bold">

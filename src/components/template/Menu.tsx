@@ -4,13 +4,13 @@ import { ParentComponent } from "solid-js";
 import { ChannelNode, HandleAction } from "../UI/ChannelLi";
 
 const container =
-	"min-w-[200px] p-2 bg-white rounded shadow outline-none font-600";
+	"min-w-[200px] p-2 bg-white dark:bg-dark-800 rounded shadow-lg dark:shadow-dark-200 outline-none font-600";
 const item =
-	"text-lg h-8 leading-none rounded flex items-center h-4 pl-6 pr-2 py-0 position-relative select-none outline-none data-[highlighted]:(outline-none bg-indigo-600 text-white) data-[disabled]:(opacity-50 cursor-not-allowed pointer-events-none) [&:not([data-highlighted])[data-expanded]]:(bg-indigo-200 text-indigo-900)";
+	"text-lg h-8 leading-none rounded flex items-center h-4 pl-6 pr-2 py-0 position-relative select-none outline-none data-[highlighted]:(outline-none bg-sky-600 text-white dark:(bg-sky-500 text-dark-800)) data-[disabled]:(opacity-50 cursor-not-allowed pointer-events-none) [&:not([data-highlighted])[data-expanded]]:(bg-sky-200 dark:bg-sky-900)";
 const itemIndicator =
 	"position-absolute left-0 h-5 w-5 inline-flex items-center justify-center";
-const separator = "h-[1px] my-1 bg-slate-400";
-const label = "text-base text-slate-600 px-2 text-sm";
+const separator = "h-[1px] my-1 prose bg-[var(--un-prose-hr)]";
+const label = "px-2 text-sm";
 const rightIcon = "ml-auto pl-5 [[data-highlighted]>&:(text-white)]";
 
 const levelToValue = (
@@ -57,7 +57,7 @@ const Menu: ParentComponent<{
 				class={
 					props.type === "context"
 						? "w-full h-auto overflow-x-hidden"
-						: "w-8 h-8 shrink-0 grid place-content-center hover:enabled:bg-indigo-200 rounded transition-colors duration-200 overflow-hidden data-[expanded]:bg-indigo-200"
+						: "w-8 h-8 shrink-0 grid place-content-center hover:enabled:(bg-slate-200 dark:bg-dark-100) rounded transition-colors overflow-hidden data-[expanded]:(bg-slate-200 dark:bg-dark-100)"
 				}
 			>
 				{props.children}

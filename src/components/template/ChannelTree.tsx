@@ -4,9 +4,9 @@ import { Component, For, Show, createMemo } from "solid-js";
 import ChannelLi, { ChannelNode } from "../UI/ChannelLi";
 
 const container =
-	"w-full overflow-x-hidden shrink-0 flex gap-1 items-stretch hover:bg-slate-100 rounded has-[[data-expanded][id*=context],[data-expanded][id*=dropdown]]:bg-slate-100";
+	"w-full overflow-x-hidden shrink-0 flex gap-1 items-stretch hover:(bg-slate-100 dark:bg-dark-400) rounded has-[[data-expanded][id*=context],[data-expanded][id*=dropdown]]:(bg-slate-100 dark:bg-dark-400)";
 const hashTag =
-	"font-bold w-8 m-1 h-8 grid place-content-center shrink-0 text-lg";
+	"font-bold prose dark:prose-invert w-8 m-1 h-8 grid place-content-center shrink-0 text-lg";
 
 const CollapsibleNodes: Component<{
 	node: ChannelNode;
@@ -23,12 +23,10 @@ const CollapsibleNodes: Component<{
 		>
 			<Collapsible.Root>
 				<div class={container}>
-					<Collapsible.Trigger>
-						<div
-							class={`${hashTag} border-4 rounded border-slate-800 [[data-expanded]>&]:(bg-slate-800 text-white) transition-colors`}
-						>
-							#
-						</div>
+					<Collapsible.Trigger
+						class={`${hashTag} border-3 rounded border-slate-800 dark:border-slate-100 data-[expanded]:(bg-slate-800 prose-invert dark:(color-slate-800 bg-slate-100)) transition-colors`}
+					>
+						#
 					</Collapsible.Trigger>
 					<ChannelLi node={props.node} />
 				</div>

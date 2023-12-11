@@ -59,7 +59,7 @@ export default function Page() {
 							<button
 								onClick={handleLogin}
 								type="button"
-								class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-indigo-600 text-white enabled:hover:bg-indigo-700"
+								class="text-lg font-bold appearance-none inline-flex content-center items-center h-10 w-auto outline-none rounded-2 px-4 bg-slate-600 text-white enabled:hover:bg-slate-700"
 							>
 								traQでログイン
 							</button>

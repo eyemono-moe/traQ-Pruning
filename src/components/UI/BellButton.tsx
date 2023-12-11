@@ -28,7 +28,7 @@ const BellButton: Component<{
 		<button
 			type="button"
 			onClick={handleClick}
-			class={`w-8 h-8 shrink-0 grid place-content-center hover:enabled:bg-indigo-200 hover:disabled:bg-slate-200 rounded transition-colors duration-200 overflow-hidden ${
+			class={`w-8 h-8 shrink-0 grid place-content-center hover:enabled:(bg-slate-200 dark:bg-dark-100) hover:disabled:bg-none rounded transition-colors overflow-hidden ${
 				props.pending ? "cursor-wait" : ""
 			} ${props.node.channel.force ? "cursor-not-allowed" : ""}`}
 			disabled={props.node.channel.force || props.pending}
