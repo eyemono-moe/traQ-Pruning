@@ -18,13 +18,7 @@ import "uno.css";
 
 export default function Root() {
 	return (
-		<Html
-			lang="ja"
-			style={{
-				"scrollbar-gutter": "stable",
-			}}
-			class="prose-slate dark:prose-zinc"
-		>
+		<Html lang="ja" class="overflow-hidden">
 			<Head>
 				<Title>Q Bell - traQの通知管理アプリ</Title>
 				<Meta charset="utf-8" />
@@ -49,7 +43,12 @@ export default function Root() {
 				/>
 				<Meta name="twitter:image" content="https://bell.trap.show/ogp.png" />
 			</Head>
-			<Body class="prose-slate dark:prose-zinc text-base prose dark:prose-invert max-w-full data-[kb-scroll-lock]:pr-0! bg-white dark:bg-dark-800 transition-colors">
+			<Body
+				class="prose-slate dark:prose-zinc text-base prose dark:prose-invert max-w-full data-[kb-scroll-lock]:pr-0! bg-white dark:bg-dark-800 transition-colors overflow-y-auto"
+				style={{
+					"scrollbar-gutter": "stable",
+				}}
+			>
 				<Suspense>
 					<ErrorBoundary>
 						<Routes>
