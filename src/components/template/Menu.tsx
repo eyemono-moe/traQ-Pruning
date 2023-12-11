@@ -6,7 +6,7 @@ import { ChannelNode, HandleAction } from "../UI/ChannelLi";
 const container =
 	"min-w-[200px] p-2 bg-white dark:bg-dark-800 rounded shadow-lg dark:shadow-dark-200 outline-none font-600";
 const item =
-	"text-lg h-8 leading-none rounded flex items-center h-4 pl-6 pr-2 py-0 position-relative select-none outline-none data-[highlighted]:(outline-none bg-sky-600 text-white dark:(bg-sky-500 text-dark-800)) data-[disabled]:(opacity-50 cursor-not-allowed pointer-events-none) [&:not([data-highlighted])[data-expanded]]:(bg-sky-200 dark:bg-sky-900)";
+	"text-lg h-8 leading-none rounded flex items-center pl-6 pr-2 py-0 position-relative select-none outline-none data-[highlighted]:(outline-none bg-sky-600 text-white dark:(bg-sky-500 text-dark-800)) data-[disabled]:(opacity-50 cursor-not-allowed pointer-events-none) [&:not([data-highlighted])[data-expanded]]:(bg-sky-200 dark:bg-sky-900)";
 const itemIndicator =
 	"position-absolute left-0 h-5 w-5 inline-flex items-center justify-center";
 const separator = "h-[1px] my-1 prose bg-[var(--un-prose-hr)]";
