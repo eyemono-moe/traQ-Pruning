@@ -11,7 +11,7 @@ const isLogin = async (request: Request) => {
 		const { token } = sessionData;
 		const api = new Apis(
 			new Configuration({
-				basePath: env("API_BASE_URL"),
+				basePath: env("VITE_API_BASE_URL"),
 				accessToken: token,
 			}),
 		);

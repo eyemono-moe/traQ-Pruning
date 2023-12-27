@@ -12,7 +12,7 @@ export const GET = async (event: APIEvent) => {
 	const clientId = env("TRAQ_CLIENT_ID");
 	const api = new Apis(
 		new Configuration({
-			basePath: env("API_BASE_URL"),
+			basePath: env("VITE_API_BASE_URL"),
 		}),
 	);
 	const { data: token } = await api.postOAuth2Token(
@@ -24,7 +24,7 @@ export const GET = async (event: APIEvent) => {
 	);
 	const loggedInApi = new Apis(
 		new Configuration({
-			basePath: env("API_BASE_URL"),
+			basePath: env("VITE_API_BASE_URL"),
 			accessToken: token.access_token,
 		}),
 	);

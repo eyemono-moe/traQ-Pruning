@@ -10,7 +10,7 @@ const useApi = async (request: Request) => {
 	}
 	const api = new Apis(
 		new Configuration({
-			basePath: env("API_BASE_URL"),
+			basePath: env("VITE_API_BASE_URL"),
 			accessToken: sessionData.token,
 		}),
 	);

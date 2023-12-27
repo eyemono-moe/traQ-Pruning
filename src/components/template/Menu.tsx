@@ -1,7 +1,6 @@
 import { ContextMenu, DropdownMenu } from "@kobalte/core";
 import { ChannelSubscribeLevel } from "@traptitech/traq";
 import { ParentComponent } from "solid-js";
-import env from "~/lib/env";
 import { ChannelNode, HandleAction } from "../UI/ChannelLi";
 
 const container =
@@ -187,7 +186,9 @@ const Menu: ParentComponent<{
 						class={item}
 						onSelect={() => {
 							window.open(
-								`${env("TRAQ_URL")}/channels/${props.node.fullName}`,
+								`${import.meta.env.VITE_TRAQ_URL}/channels/${
+									props.node.fullName
+								}`,
 								"_blank",
 								"noopener,noreferrer",
 							);

@@ -18,7 +18,6 @@ const createDarkModeContext = () => {
 	);
 
 	onMount(() => {
-		console.log("onMount");
 		const [localIsDark, setLocalIsDark] = createLocalSignal(
 			"color-schema",
 			window.matchMedia(COLOR_SCHEME_QUERY).matches,
@@ -27,7 +26,6 @@ const createDarkModeContext = () => {
 		setIsDarkSetter(() => setLocalIsDark);
 
 		const onChange = () => {
-			console.log("onChange");
 			setLocalIsDark(window.matchMedia(COLOR_SCHEME_QUERY).matches);
 		};
 
@@ -41,7 +39,6 @@ const createDarkModeContext = () => {
 		});
 
 		createEffect(() => {
-			console.log("createEffect");
 			document.documentElement.classList.toggle("dark", localIsDark());
 		});
 	});
