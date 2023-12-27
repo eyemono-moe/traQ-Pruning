@@ -12,7 +12,7 @@ export const GET = async (event: APIEvent) => {
 	const challenge = await pkceChallenge();
 
 	const clientId = env("TRAQ_CLIENT_ID");
-	const redirectBaseUrl = "https://q.trap.jp/api/v3/oauth2/authorize";
+	const redirectBaseUrl = `${env("API_BASE_URL")}/oauth2/authorize`;
 	const params = new URLSearchParams({
 		client_id: clientId,
 		response_type: "code",
