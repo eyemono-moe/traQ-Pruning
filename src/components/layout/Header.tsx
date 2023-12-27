@@ -3,6 +3,7 @@ import { Component, Show } from "solid-js";
 import { useRouteData } from "solid-start";
 import { darkMode } from "~/contexts/darkMode";
 import { isMobile } from "~/contexts/isMobile";
+import env from "~/lib/env";
 import useModal from "~/lib/useModal";
 import { routeData } from "~/routes";
 
@@ -28,7 +29,7 @@ const Header: Component = () => {
 							title={`Logged in as ${me()!.name}`}
 						>
 							<Image.Img
-								src={`https://q.trap.jp/api/v3/public/icon/${me()!.name}`}
+								src={`${env("API_BASE_URL")}/public/icon/${me()!.name}`}
 								alt={`${me()!.name} icon`}
 							/>
 							<Image.Fallback class="w-full h-full flex align-middle items-center justify-center bg-slate-800 dark:bg-white prose-white text-xl font-bold">
