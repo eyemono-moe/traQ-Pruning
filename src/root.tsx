@@ -15,6 +15,7 @@ import {
 } from "solid-start";
 import { Toaster } from "solid-toast";
 import "uno.css";
+import env from "./lib/env";
 
 export default function Root() {
 	return (
@@ -28,8 +29,8 @@ export default function Root() {
 				<Meta name="description" content="Q Bell - traQの通知編集アプリ" />
 				<Meta property="og:type" content="article" />
 				<Meta property="og:title" content="Q Bell" />
-				<Meta property="og:url" content="https://bell.trap.show" />
-				<Meta property="og:image" content="https://bell.trap.show/ogp.png" />
+				<Meta property="og:url" content={`${env("URL")}`} />
+				<Meta property="og:image" content={`${env("URL")}/ogp.png`} />
 				<Meta
 					property="og:description"
 					content="Q Bell - traQの通知編集アプリ"
@@ -41,7 +42,7 @@ export default function Root() {
 					name="twitter:description"
 					content="Q Bell - traQの通知編集アプリ"
 				/>
-				<Meta name="twitter:image" content="https://bell.trap.show/ogp.png" />
+				<Meta name="twitter:image" content={`${env("URL")}/ogp.png`} />
 			</Head>
 			<Body
 				class="h-100vh prose-slate dark:prose-zinc text-base prose dark:prose-invert max-w-full data-[kb-scroll-lock]:pr-0! bg-white dark:bg-dark-800 transition-colors overflow-y-auto"
