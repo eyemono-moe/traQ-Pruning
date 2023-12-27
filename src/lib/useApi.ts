@@ -1,5 +1,6 @@
 import { Apis, Configuration } from "@traptitech/traq";
 import { json } from "solid-start";
+import env from "./env";
 import { session } from "./session";
 
 const useApi = async (request: Request) => {
@@ -9,6 +10,7 @@ const useApi = async (request: Request) => {
 	}
 	const api = new Apis(
 		new Configuration({
+			basePath: env("API_BASE_URL"),
 			accessToken: sessionData.token,
 		}),
 	);

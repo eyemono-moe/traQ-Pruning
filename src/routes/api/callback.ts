@@ -10,7 +10,11 @@ export const GET = async (event: APIEvent) => {
 		return redirect("/api/login");
 	}
 	const clientId = env("TRAQ_CLIENT_ID");
-	const api = new Apis();
+	const api = new Apis(
+		new Configuration({
+			basePath: env("API_BASE_URL"),
+		}),
+	);
 	const { data: token } = await api.postOAuth2Token(
 		"authorization_code",
 		code,
@@ -20,6 +24,7 @@ export const GET = async (event: APIEvent) => {
 	);
 	const loggedInApi = new Apis(
 		new Configuration({
+			basePath: env("API_BASE_URL"),
 			accessToken: token.access_token,
 		}),
 	);

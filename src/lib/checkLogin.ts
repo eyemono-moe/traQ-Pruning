@@ -1,6 +1,7 @@
 import { Apis, Configuration } from "@traptitech/traq";
 import { redirect } from "solid-start";
 import { Middleware } from "solid-start/entry-server";
+import env from "./env";
 import { session } from "./session";
 
 const isLogin = async (request: Request) => {
@@ -10,6 +11,7 @@ const isLogin = async (request: Request) => {
 		const { token } = sessionData;
 		const api = new Apis(
 			new Configuration({
+				basePath: env("API_BASE_URL"),
 				accessToken: token,
 			}),
 		);
