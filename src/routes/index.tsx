@@ -6,10 +6,6 @@ import Header from "~/components/layout/Header";
 import ChannelTree from "~/components/template/ChannelTree";
 import useApi from "~/lib/useApi";
 
-export const BASE = import.meta.env.DEV
-	? "http://localhost:3000"
-	: "https://bell.trap.show";
-
 export const routeData = () => {
 	const me = createServerData$(async (_, event) => {
 		const api = await useApi(event.request);
@@ -44,7 +40,7 @@ export const routeData = () => {
 export default function Page() {
 	const { channels } = useRouteData<typeof routeData>();
 	const handleLogin = () => {
-		window.location.href = `${BASE}/api/login`;
+		window.location.href = "/api/login";
 	};
 
 	return (
