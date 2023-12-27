@@ -17,15 +17,11 @@ if (env("NODE_ENV") === "production") {
 	const MONGODB_HOSTNAME = env("NS_MONGODB_HOSTNAME");
 	const MONGODB_PORT = env("NS_MONGODB_PORT");
 
-	const MONGO_URI = `mongodb://${MONGODB_HOSTNAME}:${MONGODB_PORT}`;
+	const MONGO_URI = `mongodb://${MONGODB_USERNAME}:${encodeURIComponent(
+		MONGODB_PASSWORD,
+	)}@${MONGODB_HOSTNAME}:${MONGODB_PORT}/${MONGODB_DATABASE}`;
 
-	mongoose.connect(MONGO_URI, {
-		dbName: MONGODB_DATABASE,
-		auth: {
-			password: MONGODB_PASSWORD,
-			username: MONGODB_USERNAME,
-		},
-	});
+	mongoose.connect(MONGO_URI);
 }
 
 export const mongoSessionDb: SessionDB = {
