@@ -60,7 +60,7 @@ export default function Page() {
 			<Header />
 			<div class="w-full max-w-1000px overflow-x-hidden">
 				<Show
-					when={channels()}
+					when={channels() && unreadCounts()}
 					fallback={
 						<div class="w-full h-full flex flex-col gap-4 justify-center items-center">
 							本サービスを利用するにはtraQでログインする必要があります
