@@ -15,6 +15,9 @@ import BellButton from "./BellButton";
 export type ChannelNode = {
 	fullName: string;
 	channel: Channel;
+	unreadCount: number;
+	// 子孫チャンネルの未読数の合計
+	unreadSum: number;
 	children: ChannelNode[];
 };
 
@@ -168,6 +171,22 @@ const ChannelLi: Component<{
 							{props.node.channel.name}
 						</Show>
 					</div>
+					<Show when={props.node.unreadSum > 0}>
+						<div class="bg-slate-800 prose prose-invert px-2 rounded dark:(color-slate-800 bg-slate-100) space-x-2">
+							<Show when={props.node.unreadCount > 0}>
+								<span>{props.node.unreadCount}</span>
+							</Show>
+							<Show
+								when={
+									props.node.unreadSum > 0 &&
+									props.node.unreadSum !== props.node.unreadCount &&
+									props.node.children.length > 0
+								}
+							>
+								<span class="text-xs">({props.node.unreadSum})</span>
+							</Show>
+						</div>
+					</Show>
 					<Show when={subscriptions()}>
 						<BellButton
 							pending={isPending()}

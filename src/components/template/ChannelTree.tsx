@@ -42,6 +42,7 @@ const CollapsibleNodes: Component<{
 
 const ChannelTree: Component<{
 	channels: Channel[];
+	unreadCounts: Map<string, { count: number }>;
 }> = (props) => {
 	const channelMap = createMemo(() => {
 		const map = new Map<string, Channel>();
@@ -58,20 +59,28 @@ const ChannelTree: Component<{
 		sep = "/",
 	): ChannelNode => {
 		const fullName = `${parentName}${sep}${channel.name}`;
+		const children = channel.children
+			.reduce<ChannelNode[]>((nodes, childId) => {
+				const child = channelMap().get(childId);
+				if (child) {
+					// 子チャンネルがアーカイブされている場合等
+					nodes.push(createNode(fullName, child));
+				}
+				return nodes;
+			}, [])
+			.sort((a, b) => a.fullName.localeCompare(b.fullName));
+		const unreadCount = props.unreadCounts.get(channel.id)?.count ?? 0;
+		const unreadSum = children.reduce(
+			(sum, c) => sum + c.unreadSum,
+			unreadCount,
+		);
 
 		return {
 			fullName,
-			channel: channel,
-			children: channel.children
-				.reduce<ChannelNode[]>((acc, childId) => {
-					const child = channelMap().get(childId);
-					if (child) {
-						// 子チャンネルがアーカイブされている場合等
-						acc.push(createNode(fullName, child));
-					}
-					return acc;
-				}, [])
-				.sort((a, b) => a.fullName.localeCompare(b.fullName)),
+			channel,
+			unreadCount,
+			unreadSum,
+			children,
 		};
 	};
 
