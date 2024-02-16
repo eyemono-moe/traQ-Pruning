@@ -19,6 +19,18 @@ export const routeData = () => {
 		const { data: channels } = await api.getChannels(false);
 		return channels.public.filter((c) => !c.archived);
 	});
+	const unreadCounts = createServerData$(async (_, event) => {
+		const api = await useApi(event.request);
+		const { data: unreadChannels } = await api.getMyUnreadChannels();
+		return new Map(
+			unreadChannels.map((u) => [
+				u.channelId,
+				{
+					count: u.count,
+				},
+			]),
+		);
+	});
 	const subscriptions = createServerData$(
 		async (_, event) => {
 			const api = await useApi(event.request);
@@ -34,11 +46,11 @@ export const routeData = () => {
 		{ key: "subscriptions" },
 	);
 
-	return { me, channels, subscriptions };
+	return { me, channels, unreadCounts, subscriptions };
 };
 
 export default function Page() {
-	const { channels } = useRouteData<typeof routeData>();
+	const { channels, unreadCounts } = useRouteData<typeof routeData>();
 	const handleLogin = () => {
 		window.location.href = "/api/login";
 	};
@@ -62,7 +74,7 @@ export default function Page() {
 						</div>
 					}
 				>
-					<ChannelTree channels={channels()!} />
+					<ChannelTree channels={channels()!} unreadCounts={unreadCounts()!} />
 				</Show>
 			</div>
 		</main>
